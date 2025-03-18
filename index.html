@@ -69,18 +69,41 @@
       text-decoration: none;
       padding: 0 0.25rem;
       position: relative;
-      transition: color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+      display: inline-block;
+
+      transition-property: color, background-color;
+      transition-duration: 0.5s;
+      transition-timing-function: ease-in-out;
     }
     
+
     a:visited {
       color: #33ff33;
     }
     
     a:hover {
-      box-shadow: inset 100px 0 0 0 #222222;
-      color: #33ff33;
+      color: #33ff33 !important;
+      background-color: #222222 !important; 
     }
     
+
+    a::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      z-index: -1;
+      transition: background-color 0.5s ease-in-out;
+    }
+    
+    a:hover::after {
+      background-color: #222222;
+    }
+    
+
     a:active {
       color: #33ff33;
     }
@@ -88,7 +111,40 @@
     .special-link {
       color: #ccccff;
     }
+    
+
+    .hover-effect {
+      transition: all 0.5s ease-in-out;
+    }
+    
+    .hover-effect:hover {
+      color: #33ff33;
+      background-color: #222222;
+    }
   </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const links = document.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('mouseenter', function() {
+          this.style.backgroundColor = '#222222';
+          this.style.color = '#33ff33';
+        });
+        link.addEventListener('mouseleave', function() {
+          this.style.backgroundColor = 'transparent';
+          // Restore original color based on class
+          if (this.classList.contains('special-link')) {
+            this.style.color = '#ccccff';
+          } else if (this.getAttribute('data-visited') === 'true') {
+            this.style.color = '#33ff33';
+          } else {
+            this.style.color = '#6666cc';
+          }
+        });
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="container">
@@ -101,12 +157,12 @@
     <div>
       <div class="link-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
-        <a href="https://mediagraph.io/gus/explore/collections/selected/?sort=created_at&order=asc" class="special-link" target="_blank" rel="noopener noreferrer">link to a gallery of some recent photographs</a>
+        <a href="https://mediagraph.io/gus/explore/collections/selected/?sort=created_at&order=asc" class="special-link hover-effect" target="_blank" rel="noopener noreferrer">link to a gallery of some recent photographs</a>
       </div>
       
       <div class="link-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
-        <a href="https://cargocollective.com/gusbaganz/" target="_blank" rel="noopener noreferrer">link to some galleries of very old photographs</a>
+        <a href="https://cargocollective.com/gusbaganz/" class="hover-effect" target="_blank" rel="noopener noreferrer">link to some galleries of very old photographs</a>
       </div>
     </div>
     
@@ -115,17 +171,17 @@
     <div>
       <div class="link-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
-        <a href="https://www.instagram.com/gusbaganz/" target="_blank" rel="noopener noreferrer">link to my instagram profile</a>
+        <a href="https://www.instagram.com/gusbaganz/" class="hover-effect" target="_blank" rel="noopener noreferrer">link to my instagram profile</a>
       </div>
       
       <div class="link-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-        <a href="https://www.facebook.com/gus.baganz/" target="_blank" rel="noopener noreferrer">link to my facebook profile</a>
+        <a href="https://www.facebook.com/gus.baganz/" class="hover-effect" target="_blank" rel="noopener noreferrer">link to my facebook profile</a>
       </div>
       
       <div class="link-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-        <a href="https://open.spotify.com/playlist/0gcUBh0dzmkvDyLOmvZZxM?si=ab746efedb934761" target="_blank" rel="noopener noreferrer">link to some music I've been listening to lately</a>
+        <a href="https://open.spotify.com/playlist/0gcUBh0dzmkvDyLOmvZZxM?si=ab746efedb934761" class="hover-effect" target="_blank" rel="noopener noreferrer">link to some music I've been listening to lately</a>
       </div>
     </div>
     
@@ -134,12 +190,12 @@
     <div>
       <div class="link-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-        <a href="mailto:email@example.com" target="_blank" rel="noopener noreferrer">my email</a>
+        <a href="mailto:email@example.com" class="hover-effect" target="_blank" rel="noopener noreferrer">my email</a>
       </div>
       
       <div class="link-container">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-        <a href="http://www.geocities.ws/baganz/CV0724.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+        <a href="http://www.geocities.ws/baganz/CV0724.pdf" class="hover-effect" target="_blank" rel="noopener noreferrer">CV</a>
       </div>
     </div>
   </div>
